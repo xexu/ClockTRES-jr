@@ -1,0 +1,172 @@
+<html>
+<head>
+	<title>ClockTRES jr.</title>
+	<style>
+		@font-face {
+			 font-family: 'DejaVuSansMono';
+			 src: url('./dejavu-fonts-ttf-2.33/DejaVuSansMono.ttf') format('truetype');
+		}
+		* {
+		    padding:0;
+		    margin:0;
+		}
+		body {
+			font-family: "DejaVuSansMono";
+			font-size: 24;
+			background-color: #000000;
+		}
+		footer { 
+			font-size: 14; 
+			text-align: right;
+			margin: 0em 2em;
+		}
+		#clock {
+			text-align: center;
+			margin: 7.5em auto;
+		}
+		.gray { color: #272822; }
+		.pink { color: #da2731; }
+		.white, .highlighted { color: #f8f8f2; }  
+		.blue { color: #48bfd0; }
+		.green, .msg, .smiley { color: #a6e22e; }
+	</style>
+</head>
+<body>
+<div id="clock" class="gray">
+	<p>k<span class="tag_it highlighted">it</span>r<span class="tag_is highlighted">is</span>c<span class="tag_minute tag_ten">ten</span><span class="tag_minute tag_half">h<span class="tag_a">a</span>lf</span>x<span class="tag_msg msg">x</span></p>
+	<p><span class="tag_minute tag_quarter">quarter</span><span class="tag_minute tag_twenty_five tag_twenty">twenty</span>bz<span class="tag_msg msg">e</span></p>
+	<p>i<span class="tag_minute tag_twenty_five tag_five">five</span>c<span class="tag_minutes">minutes</span>al<span class="tag_msg msg">x</span></p>
+	<p><span class="tag_past">pas</span><span class="tag_past tag_to">t</span><span class="tag_to">o</span>b<span class="tag_hour tag_two">tw</span><span class="tag_hour tag_one tag_two">o</span><span class="tag_hour tag_one">n</span><span class="tag_hour tag_one tag_eight">e</span><span class="tag_hour tag_eight">ight</span><span class="tag_msg msg">u</span></p>
+	<p><span class="tag_hour tag_three">thre</span><span class="tag_hour tag_three tag_eleven">e</span><span class="tag_hour tag_eleven">leven</span><span class="tag_hour tag_six">six</span><span class="tag_hour tag_ten">ten</span></p>
+	<p><span class="tag_hour tag_four">four</span><span class="tag_hour tag_five">five</span><span class="tag_hour tag_seven">seve</span><span class="tag_hour tag_seven tag_nine">n</span><span class="tag_hour tag_nine">ine</span></p>
+	<p><span class="tag_hour tag_twelve">twelve</span>x<span class="tag_minute tag_oclock">o'clock</span><span class="tag_am">am</span></p>
+	<p><span class="tag_pm">pm</span>yd<span class="tag_m">m</span><span class="tag_t tag_th">t</span><span class="tag_th">h</span><span class="tag_w">w</span>m<span class="tag_f">f</span><span class="tag_s tag_su">s</span><span class="tag_su">u</span>al<span class="tag_smiley smiley">:)</span></p>
+</div>
+<footer class="gray"> by Christian C&oacute;rdoba </footer>
+	<script src="./jquery-1.7.1.min.js"></script>
+
+	<script>
+		var d = new Date(),
+			minutes = $('.tag_minutes'),
+			a = $('.tag_a'),
+			tagsHour = $('.tag_hour'),
+			tagsMinute = $('.tag_minute'),
+			am = $('.tag_am'),
+			pm = $('.tag_pm'),
+			past = $('.tag_past'),
+			to = $('.tag_to'),
+			tagWeekdays = $('.tag_su','.tag_m','.tag_t','.tag_w','.tag_th','.tag_f','.tag_s'),
+			weekdays = Array($('.tag_su'),$('.tag_m'),$('.tag_t'),$('.tag_w'),$('.tag_th'),$('.tag_f'),$('.tag_s'));
+
+		function getHoursTag(hour, min){
+			var items = new Array();
+			min = min / 5.0;
+			if (hour >= 12){
+				items.push(pm);
+			} else {
+				items.push(am);
+			}
+
+			hour = hour % 12;
+			if (min > 6.5){
+				hour++;
+			}
+			switch (hour){
+				case 1: items.push(tagsHour.filter(".tag_one")); break; 
+				case 2: items.push(tagsHour.filter(".tag_two")); break;
+				case 3: items.push(tagsHour.filter(".tag_three")); break;
+				case 4: items.push(tagsHour.filter(".tag_four")); break;
+				case 5: items.push(tagsHour.filter(".tag_five")); break;
+				case 6: items.push(tagsHour.filter(".tag_six")); break;
+				case 7: items.push(tagsHour.filter(".tag_seven")); break;
+				case 8: items.push(tagsHour.filter(".tag_eight")); break;
+				case 9: items.push(tagsHour.filter(".tag_nine")); break;
+				case 10: items.push(tagsHour.filter(".tag_ten")); break;
+				case 11: items.push(tagsHour.filter(".tag_eleven")); break;
+				case 12: items.push(tagsHour.filter(".tag_twelve")); break;
+			}
+			return items;
+		}
+
+		function getMinutesTag(min){
+			var items = new Array();
+			min = min / 5.0;
+			if (min < 0.5 || min > 11.5){
+				items.push(tagsMinute.filter(".tag_oclock"));
+			} else if (min < 1.5 || min > 10.5){
+					items.push(tagsMinute.filter(".tag_five"));
+					items.push(minutes);
+			} else if (min < 2.5 || min > 9.5){
+				items.push(tagsMinute.filter(".tag_ten"));
+				items.push(minutes);
+			} else if (min < 3.5 || min > 8.5){
+				items.push(tagsMinute.filter(".tag_quarter"));
+				items.push(a);
+			} else if (min < 4.5 || min > 7.5){
+				items.push(tagsMinute.filter(".tag_twenty"));
+				items.push(minutes);
+			} else if (min < 5.5 || min > 6.5){
+				items.push(tagsMinute.filter(".tag_twenty_five"));
+				items.push(minutes);
+			} else {
+				items.push(tagsMinute.filter(".tag_half"));
+			}
+
+			if (min > 0.5 && min < 6.5){
+				items.push(past);
+			} else if (min > 6.5 && min < 11.5){
+				items.push(to);
+			}
+			return items;
+		}
+
+		function getWeekdayTag(day){
+			return weekdays[day];
+		}
+
+		function resetHighlight(){
+			tagsHour.removeClass('highlighted');
+			tagsMinute.removeClass('highlighted');
+			am.removeClass('highlighted');
+			pm.removeClass('highlighted');
+			past.removeClass('highlighted');
+			to.removeClass('highlighted');
+			a.removeClass('highlighted');
+			minutes.removeClass('highlighted');
+			tagWeekdays.removeClass('highlighted');
+		}
+
+		function highlightDateTime(){
+			d = new Date();
+			var itemsToHighlight = new Array(),
+				itemsMinutes,
+				itemsHours;
+			itemsToHighlight.push(getWeekdayTag(d.getDay()));
+			itemsMinutes = getMinutesTag(d.getMinutes());
+			for(var i = 0; i< itemsMinutes.length; i++){
+				itemsToHighlight.push(itemsMinutes[i]);
+			}
+			itemsHours = getHoursTag(d.getHours(), d.getMinutes());
+			for(var i = 0; i< itemsHours.length; i++){
+				itemsToHighlight.push(itemsHours[i]);
+			}
+
+			resetHighlight();
+
+			for(var i=0;i<itemsToHighlight.length;i++){
+				(itemsToHighlight[i]).addClass('highlighted');
+			}
+		}
+
+		function adjustOffset(){
+			highlightDateTime();
+			setInterval("highlightDateTime()", 60000);
+		}
+
+		(function() {
+			highlightDateTime();
+			setTimeout("adjustOffset()", 60000-(d.getSeconds()*1000));
+		})();
+	</script>
+</body>
+</html>
