@@ -7,7 +7,7 @@ It is plain HTML/CSS3/JS using jQuery so you don't need a webserver to run it.
 You are free to use, embed, modify and distribute it as long as you keep some credits.
 
 Notes:
--The original laoyt is the following:
+-The original layout is the following:
 
 KITRISCTENHALFX.
 QUARTERTWENTYBZ.
