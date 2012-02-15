@@ -55,7 +55,6 @@
 			pm = $('.tag_pm'),
 			past = $('.tag_past'),
 			to = $('.tag_to'),
-			tagWeekdays = $('.tag_su','.tag_m','.tag_t','.tag_w','.tag_th','.tag_f','.tag_s'),
 			weekdays = Array($('.tag_su'),$('.tag_m'),$('.tag_t'),$('.tag_w'),$('.tag_th'),$('.tag_f'),$('.tag_s'));
 
 		function getHoursTag(hour, min){
@@ -133,7 +132,9 @@
 			to.removeClass('highlighted');
 			a.removeClass('highlighted');
 			minutes.removeClass('highlighted');
-			tagWeekdays.removeClass('highlighted');
+			for(var i=0;i<7;i++){
+				weekdays[i].removeClass('highlighted');
+			}
 		}
 
 		function highlightDateTime(){
